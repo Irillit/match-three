@@ -97,6 +97,7 @@ class GameBoard:
         print("Regenerated after row column deletion")
 
     def detect_row(self):
+        """Detects 3 or more elements in the row."""
         length = 0
         start = 0
         color = self._board[0, 0]
@@ -128,6 +129,7 @@ class GameBoard:
                 self.remove_and_shift_row(start, self._width - 1, i)
 
     def detect_column(self):
+        """Detects 3 or more elements in the column."""
         length = 0
         start = 0
         color = self._board[0, 0]
