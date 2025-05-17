@@ -60,6 +60,7 @@ def decode_click(position: tuple[int, int]) -> tuple[int, int] | None:
     return i, j
 
 def draw_board(board: GameBoard):
+    """Draws a local board in the window."""
     i_marg = START_COORD_I
     j_marg = START_COORD_J
 
@@ -78,13 +79,13 @@ def draw_board(board: GameBoard):
 clock = pygame.time.Clock()
 
 pygame.init()
-pygame.display.set_caption('Quick Start')
+pygame.display.set_caption('Match Three')
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
 background = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
 background.fill(pygame.Color('#FFFFFF'))
 
-is_running = True
+
 
 manager = pygame_gui.UIManager((WINDOW_WIDTH, WINDOW_HEIGHT), theme_path="quick_start.json")
 new_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((105, 220), (90, 40)),
@@ -94,6 +95,7 @@ new_game_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((105, 2
 board = GameBoard(WIDTH, HEIGHT, 5)
 font = pygame.font.SysFont("monospace", 15)
 
+is_running = True
 while is_running:
     time_delta = clock.tick(60) / 1000.0
     events = pygame.event.get()
@@ -116,7 +118,7 @@ while is_running:
             pos = pygame.mouse.get_pos()
             coords = decode_click(pos)
             if coords:
-                if board.selected_item and board.are_neighbours(coords):
+                if board.selected_item and board.are_swappable(coords):
                     board.swap(coords)
                     draw_board(board)
                     board.remove_selection()
